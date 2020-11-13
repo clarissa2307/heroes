@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { HeroeModel } from '../../models/heroe.model';
+import { HeroesService } from '../../services/heroes.service';
 
 @Component({
   selector: 'app-heroe',
@@ -11,7 +12,7 @@ export class HeroeComponent implements OnInit {
 
   heroe: HeroeModel = new HeroeModel();
 
-  constructor() { }
+  constructor( private heroesService: HeroesService) { }
 
   ngOnInit(): void {
   }
@@ -24,8 +25,13 @@ export class HeroeComponent implements OnInit {
       return;
     }
 
-    console.log(form);
-    console.log(this.heroe);
+    this.heroesService.crearHeroe( this.heroe )
+       
+         .subscribe( resp => {
+           console.log(resp);
+           this.heroe = resp;
+         });
+       
   }
 
 }
